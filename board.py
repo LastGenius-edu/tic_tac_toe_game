@@ -50,7 +50,8 @@ class TicTacToeBoard:
 
         :return: str
         """
-        return "\n".join(" ".join(row) for row in self.board)
+        divider = "\n" + '-' * 3 * self.size + "\n"
+        return f"{divider}{divider.join(' | '.join(row) for row in self.board)}{divider}"
 
     def __setitem__(self, cell_position, value):
         """

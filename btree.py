@@ -44,20 +44,21 @@ class BinaryTree:
             else:
                 shuffle(possible_turns)
 
-                new_boards = [deepcopy(current_board) for _ in range(2)]
+                new_board1 = deepcopy(current_board)
+                new_board2 = deepcopy(current_board)
 
-                for board in new_boards:
-                    board[possible_turns[0]] = self.markers[self.player]
-                    board[possible_turns[1]] = self.markers[self.player]
+                new_board1[possible_turns[0]] = self.markers[self.player]
+                new_board2[possible_turns[1]] = self.markers[self.player]
 
-                node.left = Node(new_boards[0])
-                node.right = Node(new_boards[1])
+                node.left = Node(new_board1)
+                node.right = Node(new_board2)
 
                 if player == "Player 1":
                     player = "Player 2"
                 if player == "Player 2":
                     player = "Player 1"
                 recurse(node.left, player)
+                recurse(node.right, player)
 
         recurse(self._root, self.player)
 
@@ -91,4 +92,4 @@ class BinaryTree:
         recurse(self._root)
 
     def best_move(self):
-        if self._rot
+        pass
