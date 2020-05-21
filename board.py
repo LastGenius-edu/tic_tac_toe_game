@@ -22,7 +22,7 @@ class TicTacToeBoard:
         self.winning_length = winning_length
         self.board = [[" " for _ in range(size)] for _ in range(size)]
         self.players = ["Player 1", "Player 2"]
-        self.markers = {"Player 1": "X", "Player 2": "O"}
+        self.markers = {"Player 1": "O", "Player 2": "X"}
 
         # Represents the last turn: (symbol, position)
         self.last_turn = None
@@ -52,9 +52,9 @@ class TicTacToeBoard:
         """
         return "\n".join(" ".join(row) for row in self.board)
 
-    def __setitem__(self, cell_position, player):
+    def __setitem__(self, cell_position, value):
         """
-        Sets the cell at the board to the provided value
+        Sets the cell at the board to the provided value of the player's marker
 
         :cell_position: (int, int)
         """
@@ -68,8 +68,8 @@ class TicTacToeBoard:
         if self.board[cell_position[0]][cell_position[1]] != " ":
             raise CellNotEmptyError
 
-        self.board[cell_position[0]][cell_position[1]] = self.markers[player]
-        self.last_turn = (self.markers[player], cell_position)
+        self.board[cell_position[0]][cell_position[1]] = value
+        self.last_turn = (value, cell_position)
 
     def __getitem__(self, cell_position):
         """
@@ -128,7 +128,7 @@ class TicTacToeBoard:
         If the Player 2 won a game, returns -1
         If there is a draw, returns 0
         """
-        player_results = {"Player 1": False, "Player 2": False}
+        player_results = {player: False for player in self.players}
 
         for row in range(self.size):
             for col in range(self.size):
@@ -152,5 +152,7 @@ class TicTacToeBoard:
 class IncorrectCellPositionError(Exception):
     pass
 
+
 class CellNotEmptyError(Exception):
     pass
+
