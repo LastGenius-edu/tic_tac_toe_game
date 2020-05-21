@@ -14,9 +14,9 @@ class BinaryTree:
     of possible turns and consequent game boards
     """
 
-    def __init__(self, starting_board):
+    def __init__(self, starting_board, player="Player 1"):
         self._root = Node(starting_board)
-        self.player = "Player 1"
+        self.player = player
         self.markers = {"Player 1": "O", "Player 2": "X"}
 
     def create_tree(self):
@@ -33,32 +33,24 @@ class BinaryTree:
 
             if len(possible_turns) == 1:
                 new_board = deepcopy(current_board)
-                new_board[possible_turns[0]] = self.markers[self.player]
+                new_board[possible_turns[0]] = self.markers[player]
                 node.left = Node(new_board)
 
-                if player == "Player 1":
-                    player = "Player 2"
-                if player == "Player 2":
-                    player = "Player 1"
-                recurse(node.left, player)
+                recurse(node.left, "Player 1" if player == "Player 2" else "Player 2")
             else:
                 shuffle(possible_turns)
 
                 new_board1 = deepcopy(current_board)
                 new_board2 = deepcopy(current_board)
 
-                new_board1[possible_turns[0]] = self.markers[self.player]
-                new_board2[possible_turns[1]] = self.markers[self.player]
+                new_board1[possible_turns[0]] = self.markers[player]
+                new_board2[possible_turns[1]] = self.markers[player]
 
                 node.left = Node(new_board1)
                 node.right = Node(new_board2)
 
-                if player == "Player 1":
-                    player = "Player 2"
-                if player == "Player 2":
-                    player = "Player 1"
-                recurse(node.left, player)
-                recurse(node.right, player)
+                recurse(node.left, "Player 1" if player == "Player 2" else "Player 2")
+                recurse(node.right, "Player 1" if player == "Player 2" else "Player 2")
 
         recurse(self._root, self.player)
 
@@ -92,4 +84,9 @@ class BinaryTree:
         recurse(self._root)
 
     def best_move(self):
-        pass
+        """
+        Returns the best possible move starting from the root
+        """
+        if (self._root.left is None) or (self._root.right.points >= self._root.left.points):
+            return self._root.right.board.last_turn[1]
+        return self._root.left.board.last_turn[1]

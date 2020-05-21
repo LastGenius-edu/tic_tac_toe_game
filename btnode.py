@@ -14,6 +14,7 @@ class Node(object):
         self.board = board
         self.left = left
         self.right = right
+        self.points = points
 
     def __str__(self):
         return str(self.board)
