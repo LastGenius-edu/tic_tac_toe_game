@@ -3,7 +3,7 @@
 Sultanov Andriy
 MIT License 2020
 """
-from btree import BinaryTree
+from tree import Tree
 from board import TicTacToeBoard
 import re
 import rich
@@ -14,7 +14,7 @@ def computer_turn(board, player):
     Decides on the best computer turn, makes a move and returns the board
     """
     markers = {"Player 1": "O", "Player 2": "X"}
-    tree = BinaryTree(board, player)
+    tree = Tree(board, player)
     tree.create_tree()
     tree.point_counter()
     position = tree.best_move()
@@ -68,7 +68,7 @@ def computer_won():
     """
     Prints the failure message
     """
-    rich.print(":cry:", ":cry::", ":worried:",
+    rich.print(":cry:", ":cry:", ":worried:",
                "[bold red]You lost :( Maybe next time?[/bold red]",
                ":worried:", ":cry:", ":cry:")
 
@@ -77,11 +77,13 @@ def check_win(board, player):
     """
     Checks if anyone has won, if yes, stops the game and launches the congratulatory message.
     """
-    if (result := board.calculate_result()) != 0 or len(board.free_cells()) == 0:
+    if (result := board.calculate_result()) != 0 or board.free_cells() is None:
         if (result == 1 and player) or (result == -1 and not player):
             player_won()
-        else:
+        elif (result == 1 and not player) or (result == -1 and player):
             computer_won()
+        else:
+            draw()
 
         return True
     return False
@@ -140,7 +142,7 @@ def test():
     Little test function for debug
     """
     board = TicTacToeBoard()
-    tree = BinaryTree(board)
+    tree = Tree(board)
     tree.create_tree()
     print(tree._root)
     print(tree._root.left)
