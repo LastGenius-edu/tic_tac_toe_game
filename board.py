@@ -105,7 +105,7 @@ class TicTacToeBoard:
 
             # Travel for winning_length cells in every possible side
             # If all the symbols are the same as the starting one, we've found a winning combination!
-            for i in range(self.winning_length):
+            for i in range(self.winning_length - 1):
                 current_position = (current_position[0] + direction[0], current_position[1] + direction[1])
                 try:
                     if self[current_position] != start_value:
@@ -157,3 +157,11 @@ class IncorrectCellPositionError(Exception):
 class CellNotEmptyError(Exception):
     pass
 
+
+if __name__ == '__main__':
+    board = TicTacToeBoard()
+    board[(0, 0)] = "X"
+    board[(0, 1)] = "X"
+    board[(0, 2)] = "X"
+    print(board)
+    print(board.calculate_result())

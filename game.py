@@ -89,6 +89,7 @@ def check_win(board, player):
 
 def start_game():
     """
+    Main game loop
     Starts the game and leads to the end
     """
     board = TicTacToeBoard()
@@ -98,7 +99,13 @@ def start_game():
     while len(answer) < 1 or answer[0].lower() not in ["y", "n"]:
         answer = input("Do you want to play first [Y/N]? ")
 
+    print(board)
+
     if answer[0].lower() == "y":
+
+        # Enter the game loop which will exit once the
+        # board is filled or someone has won
+        # The player's turn is first
         while True:
             player_turn(board, "Player 1")
             print(board)
@@ -111,6 +118,10 @@ def start_game():
             if check_win(board, True):
                 break
     else:
+
+        # Enter the game loop which will exit once the
+        # board is filled or someone has won
+        # The player's turn is second
         while True:
             print("Computer's turn:")
             computer_turn(board, "Player 1")
@@ -140,5 +151,4 @@ def test():
 
 
 if __name__ == '__main__':
-    # test()
     start_game()
