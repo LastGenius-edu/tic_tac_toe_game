@@ -3,7 +3,7 @@
 Sultanov Andriy
 MIT License 2020
 """
-from tree import Tree
+from btree import BinaryTree
 from board import TicTacToeBoard
 import re
 import rich
@@ -14,7 +14,7 @@ def computer_turn(board, player):
     Decides on the best computer turn, makes a move and returns the board
     """
     markers = {"Player 1": "O", "Player 2": "X"}
-    tree = Tree(board, player)
+    tree = BinaryTree(board, player)
     tree.create_tree()
     tree.point_counter()
     position = tree.best_move()
@@ -142,7 +142,7 @@ def test():
     Little test function for debug
     """
     board = TicTacToeBoard()
-    tree = Tree(board)
+    tree = BinaryTree(board)
     tree.create_tree()
     print(tree._root)
     print(tree._root.left)
